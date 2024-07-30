@@ -21,6 +21,12 @@ class GoogleDriverHelper:
         self.upload_file_from_path(file_path=file_name, file_name=file_name)
         os.remove(file_name)
 
+    def get_files_from_folder(self) -> list[str]:
+        file_list = self.drive.ListFile(
+            {"q": f"'{self.folder_id}' in parents and trashed=false"}
+        ).GetList()
+        return [file["title"] for file in file_list]
+
     def _setup_folder(self, folder_name: str):
         query = f"title='{folder_name}' and mimeType='application/vnd.google-apps.folder' and trashed=false"
         file_list = self.drive.ListFile({"q": query}).GetList()
