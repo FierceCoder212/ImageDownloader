@@ -29,18 +29,21 @@ headers = {
     "sec-fetch-user": "?1",
     "upgrade-insecure-requests": "1"
 }
+index = 0
 
 
 def download_and_upload_image(image):
+    global index
     url = image["image_url"]
     file_name = image["file_name"]
+    print(f"On index {index} out of {total_data} : {url}")
+    index += 1
     try:
-        print(f"Getting response for image {url}")
         response = requests.get(url, headers=headers)
         if response.status_code == 200:
-            print(f"Uploading image {file_name}")
+            # print(f"Uploading image {file_name}")
             helper.upload_file_from_content(response.content, file_name)
-            print(f"Image uploaded {file_name}")
+            # print(f"Image uploaded {file_name}")
             return None  # No error
         else:
             raise Exception(f'Image downloading error : {response.status_code}, {response.text}')
@@ -61,7 +64,7 @@ with open("Uploaded Files.json", "r") as all_uploaded_images:
 
 all_data = [data for data in all_data if data["file_name"] not in all_uploaded_data]
 list_error_images = []
-
+total_data = len(all_data)
 # Create a ThreadPoolExecutor
 with ThreadPoolExecutor(max_workers=10) as executor:
     # Submit tasks to the executor
