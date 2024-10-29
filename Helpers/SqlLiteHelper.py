@@ -31,7 +31,7 @@ class SQLiteHelper:
     def fetch_records_by_page(self, page_size: int, offset: int):
         """ Fetch a page of records starting from the specified offset. """
         self.create_connection()
-        fetch_sql = "SELECT section_diagram, base_64_img FROM section_diagrams LIMIT ? OFFSET ?;"
+        fetch_sql = "SELECT section_diagram, section_diagram_url FROM section_diagrams LIMIT ? OFFSET ?;"
         try:
             cursor = self.conn.cursor()
             cursor.execute(fetch_sql, (page_size, offset))
