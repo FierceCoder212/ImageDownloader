@@ -16,7 +16,7 @@ logger = logging.getLogger(__name__)
 
 google_drive_helper = GoogleDriverHelper('John Dheere Images')
 db_file = r'C:\Workspace\JohnDeereScraper\Images.db'
-num_threads = 10
+num_threads = 1
 print('Fetching Total Records...')
 total_count = SQLiteHelper(db_file).fetch_total_records()
 print(f'Total Records Fetched {total_count}...')
