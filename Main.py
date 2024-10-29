@@ -26,8 +26,8 @@ print(f'Page Size {page_size}')
 
 def process_page(thread_index):
     """ Processes a specific page of records. """
-    print(f'Starting Thread : {thread_index}')
     offset = thread_index * page_size
+    print(f'Starting Thread : {thread_index} Ranging : {page_size} - {offset}')
     sql_lite_helper = SQLiteHelper(db_file)
     for section_diagram, base_64_img in sql_lite_helper.fetch_records_by_page(page_size=page_size, offset=offset):
         try:
