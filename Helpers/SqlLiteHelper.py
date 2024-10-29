@@ -52,7 +52,6 @@ class SQLiteHelper:
             count = cursor.fetchone()[0]  # Extract the count from the result
             return count
         except Error as e:
-            logger.error(f"Error fetching total record count: {e}")
             return 0
         finally:
             self.close_connection()

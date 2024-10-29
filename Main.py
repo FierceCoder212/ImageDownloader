@@ -18,7 +18,7 @@ google_drive_helper = GoogleDriverHelper('John Dheere Images')
 db_file = r'C:\Workspace\JohnDeereScraper\Images.db'
 sql_lite_helper = SQLiteHelper(db_file)
 
-for section_diagram, base_64_img in sql_lite_helper.fetch_total_records():
+for section_diagram, base_64_img in sql_lite_helper.yield_fetch_all_records():
     try:
         base_64_img = base_64_img.replace('data:image/PNG;base64,', '')
         image_data = base64.b64decode(base_64_img)
