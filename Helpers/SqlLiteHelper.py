@@ -28,6 +28,35 @@ class SQLiteHelper:
         finally:
             self.close_connection()
 
+    def fetch_records_by_page(self, page_size: int, offset: int):
+        """ Fetch a page of records starting from the specified offset. """
+        self.create_connection()
+        fetch_sql = "SELECT section_diagram, base_64_img FROM section_diagrams LIMIT ? OFFSET ?;"
+        try:
+            cursor = self.conn.cursor()
+            cursor.execute(fetch_sql, (page_size, offset))
+            return cursor.fetchall()
+        except Error as e:
+            print(f"Error fetching page: {e}")
+            return []
+        finally:
+            self.close_connection()
+
+    def fetch_total_records(self):
+        """ Fetch total record count in section_diagrams table. """
+        self.create_connection()
+        fetch_sql = "SELECT COUNT(*) FROM section_diagrams;"
+        try:
+            cursor = self.conn.cursor()
+            cursor.execute(fetch_sql)
+            count = cursor.fetchone()[0]  # Extract the count from the result
+            return count
+        except Error as e:
+            logger.error(f"Error fetching total record count: {e}")
+            return 0
+        finally:
+            self.close_connection()
+
     def close_connection(self):
         if self.conn:
             self.conn.close()
